@@ -1,0 +1,43 @@
+# Copy to .env and fill in values:
+#   cp .env.example .env
+# The backup script loads .env from this directory when present.
+
+# Directory to back up (default if unset: $HOME/storage/homelab)
+# BACKUP_SOURCE=${HOME}/storage/homelab
+
+# Optional extended regex (ERE) tested against each immediate child directory name under
+# BACKUP_SOURCE. When set, BACKUP_SOURCE must be the parent folder (e.g. homelab) and only
+# matching subfolders are included in one archive. Example: include immich and nextcloud, not arr:
+# BACKUP_SOURCE_REGEX='^(immich|nextcloud)$'
+
+# S3 bucket name only (no s3:// prefix)
+S3_BUCKET=
+
+# Optional object key prefix inside the bucket (no leading slash), e.g. backups/homelab
+# S3_PREFIX=
+
+# Optional: directory for the encrypted archive while it is built and uploaded (default: system temp).
+# Set this to a path on a disk with enough free space if /tmp hits quota or is full (gpg writes here).
+# BACKUP_TMP_DIR=/mnt/other-disk/backup-work
+
+# Optional: set to 0 if you want tar to abort on any unreadable file (default: 1 = skip unreadable files).
+# BACKUP_TAR_IGNORE_FAILED_READ=1
+
+# Passphrase for GPG symmetric encryption (AES256). Store securely; treat like a secret key.
+BACKUP_PASSPHRASE=
+
+# AWS region for the bucket
+AWS_DEFAULT_REGION=
+
+# API credentials (required). The backup script forces env-only auth and ignores
+# ~/.aws/credentials and AWS_PROFILE, and sets AWS_SHARED_CREDENTIALS_FILE=/dev/null.
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+
+# Optional: temporary credentials / assumed roles
+# AWS_SESSION_TOKEN=
+
+# restore_homelab.sh uses the same variables. Example:
+#   ./restore_homelab.sh --list
+#   ./restore_homelab.sh --latest /path/to/empty-or-target-dir
+#   ./restore_homelab.sh -k automatic/homelab-20260101T000000Z.tar.gz.gpg /path/to/dir
