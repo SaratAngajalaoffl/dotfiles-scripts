@@ -1,4 +1,5 @@
 #! /usr/bin/zsh
 
 killall waybar
-waybar
+waybar &
+disown
